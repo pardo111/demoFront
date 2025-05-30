@@ -1,1 +1,71 @@
 @import "tailwindcss";
+/* Fondo general del calendario */
+.react-calendar {
+  background-color: #1e293b !important; /* slate-800 */
+  color: #f1f5f9; /* slate-100 */
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width:500px !important;
+}
+
+/* Encabezado de mes y navegación */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.react-calendar__navigation button {
+  background: none;
+  color: #f1f5f9;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.react-calendar__navigation button:hover {
+  color: #38bdf8; /* sky-400 */
+}
+
+/* Días de la semana */
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 10px !important;
+  font-weight: 600;
+  color: #cbd5e1 !important; /* slate-300 */
+  margin-bottom: 30px;
+}
+
+/* Celdas de días */
+.react-calendar__tile {
+  background: none;
+  color: #a8aaa4 !important;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+.react-calendar__tile:hover {
+  background-color: #334155; /* slate-700 */
+}
+
+/* Día seleccionado */
+.react-calendar__tile--active {
+  background: #3b82f6; /* blue-500 */
+  color: white;
+}
+
+/* Día actual */
+.react-calendar__tile--now {
+  background: #facc15; /* yellow-400 */
+  color: black;
+}
+
+/* Días fuera del mes */
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #64748b; /* slate-400 */
+}
