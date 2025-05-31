@@ -2,8 +2,11 @@ import In from "../components/In";
 import login from "../assets/login.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css"
 
-export default function InicioSesion() {
+export default function Inicio_sesion() {
 
     const navigate= useNavigate();
     const [data, setData] = useState({
@@ -21,8 +24,32 @@ export default function InicioSesion() {
 
     function sendData(e) {
         e.preventDefault();
-        setIsSubmit(true);
-        console.log("enviando", data);
+
+        if(data.email==='pardovelcari111@gmail.com'){
+            setIsSubmit(true);
+            console.log("enviando", data);
+            navigate('/Dashboard/inicio')
+            Toastify({
+                text: "Has iniciado sesion",
+                duration: 3000,
+                close: true,
+                gravity: "top", 
+                position: "center",  
+                style: {
+                    background: "linear-gradient(to right, #a8e063, #56ab2f)", // gradiente verde claro
+                    color: "#fff",
+                    borderRadius: "8px",
+                    fontWeight: "bold"
+                  }
+              }).showToast();
+        }else{
+            Swal.fire({
+                title: "Email no registrado",
+                text: "este email no esta registrado como usuario",
+                icon: "error"
+              });
+        }
+        
 
     }
 
@@ -48,7 +75,7 @@ export default function InicioSesion() {
                             name={"password"}
                             type={"password"}
                             autoComplete={"on"}
-                            rules={"Debe tener entre 8 y 16 caracteres, sin espacios en blanco, al menos un número, al menos una letra mayúscula, al menos una letra minúscula"}
+                            rules={"no debe estar vacio"}
                             placeholder={"Contraseña"}
                             label={"Contraseña"}
                         ></In>

@@ -1,7 +1,7 @@
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import InicioSesion from "./views/inicioSesion";
+import Inicio_sesion from "./views/inicio_sesion";
 import Reset_contra from './views/reset_contra';
 import Dashboard from './views/Dashboard';
 import Inicio from './views/Inicio';
@@ -18,7 +18,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/Inicio_sesion" element={<InicioSesion />}></Route>
+          <Route path="/Inicio_sesion" element={<Inicio_sesion />}></Route>
           <Route path="/reset_contra" element={<Reset_contra />}></Route>
           <Route path="/Dashboard" element={<Dashboard />}>
             <Route path="inicio" element={<Inicio />} />
