@@ -1,45 +1,71 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-
     const [user, setUser] = useState(false);
     const navigate = useNavigate();
 
+    const revisarLlaves = ()=>{
+
+        console.log(user)
+    };
+
+     useEffect(() => {
+        const token = localStorage.getItem('token');
+        const username = localStorage.getItem('username');
+
+        if (!token || !username) {
+            navigate("/Inicio_sesion");
+        } else {
+            setUser(username);
+        }
+    }, [navigate]);
     return (
-        <div className="bg-[#273240] relative min-h-screen w-screen flex items-start justify-around md:py-12 px-0 m-0">
-            <div className=" flex flex-col min-w-1/9 items-center text-white text-4xl md:gap-24  ">
-                <div className="flex-col  items-around  items-center h-[8-vh] ">
-                    <div>
-                        <div className="">
-                            {user ?
-                                <img src="" alt="" /> :
-                                <div className="rounded-full border-white border-2 w-[30px] h-[30px] md:w-[80px] md:h-[80px] flex items-center justify-center">
-                                    <i className="fa-solid fa-user md:text-4xl text-[20px]"></i>
-                                </div>
 
-                            }
-                        </div>
-                        <div className="hidden md:block">
-                            <h1  >
-                                {userName}
-                            </h1>
-                        </div>
+<div className="bg-[#273240] min-h-screen w-screen flex flex-row items-start justify-start m-0 overflow-hidden">
 
-                    </div>
-                    <div className="text-lg items-center gap-4 py-4 flex flex-col md:flex-row">
-                        <i className="fa-solid fa-sun"></i>
-                        <i className="fa-solid fa-right-from-bracket hover:cursor-pointer " onClick={() => { navigate('/Inicio_sesion') }}></i>
-                    </div>
+            {/* --- MENÚ LATERAL FIJO --- */}
+            <div className="fixed top-0 left-0 h-screen w-[70px] md:w-[180px] 
+                            bg-[#273240] text-white text-4xl flex flex-col 
+                            items-center justify-between py-6 md:py-12 z-50">
+
+                {/* Usuario e iconos */}
+                <div className="flex flex-col items-center gap-6">
+                    {user ? (
+                        <img src="" alt="avatar" className="w-[40px] h-[40px] md:w-[80px] md:h-[80px] rounded-full border-2 border-white" />
+                    ) : (
+                        <div className="rounded-full border-white border-2 w-[40px] h-[40px] md:w-[80px] md:h-[80px] flex items-center justify-center">
+                            <i className="fa-solid fa-user md:text-4xl text-[20px]"></i>
+                        </div>
+                    )}
+                    <h1 className="hidden md:block text-lg">{user}</h1>
                 </div>
-                <Navbar />
+
+                {/* --- Navbar --- */}
+                <div className="flex-1 mt-8 overflow-y-auto">
+                    <Navbar />
+                </div>
+
+                {/* Iconos inferiores */}
+                <div className="flex flex-col items-center gap-4 text-lg mt-8">
+                    <i className="fa-solid fa-sun"></i>
+                    <i
+                        className="fa-solid fa-right-from-bracket hover:cursor-pointer"
+                        onClick={() =>{ 
+                            navigate("/Inicio_sesion")
+                            setUser({user:"", token:""});
+                            localStorage.removeItem('username');
+                            localStorage.removeItem('token');
+                        }}
+                    ></i>
+                </div>
             </div>
-            <div className="bg-white w-full md:w-4/6 min-h-[90vh] md:rounded-3xl p-4 shadow-lg overflow-auto">
-                <Outlet></Outlet>
+
+            {/* --- CONTENIDO PRINCIPAL --- */}
+            <div className="bg-white flex-1 ml-[70px] md:ml-[180px] min-h-screen rounded-none md:rounded-l-3xl p-4 shadow-lg overflow-y-auto">
+                <Outlet />
             </div>
         </div>
     );
-
 }

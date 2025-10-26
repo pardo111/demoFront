@@ -6,10 +6,10 @@ import Swal from "sweetalert2";
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 import api from "@/services/api";
-import {  useUser } from "../../context/UserContext";
+import { useUser } from "../../context/UserContext";
 
 export default function Inicio_sesion() {
-    const {user} = useUser();
+    const { user, setUser } = useUser();
     const navigate = useNavigate();
     const [isSubmit, setIsSubmit] = useState(false);
     const [data, setData] = useState({
@@ -33,15 +33,16 @@ export default function Inicio_sesion() {
     async function sendData(e) {
         e.preventDefault();
         setIsSubmit(true);
-        console.log(user)
         try {
-
+            console.log(data);
             const response = await api.post("/auth/login", data);
-            if (response.status === 200) {
+            console.log(response)
+
+            if (response.status == 200) {
                 navigate('/Dashboard');
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("username", response.data.username);
-                setUser({username:response.data.username});
+                setUser({ username: response.data.username });
                 setUser
                 Toastify({
                     text: "Has iniciado sesion",
@@ -64,15 +65,19 @@ export default function Inicio_sesion() {
                     icon: "error"
                 });
             } else if (response.status >= 500) {
+
                 Swal.fire({
                     title: "error fuera de servicio",
                     text: "error en la app",
-                    icon: "error"
+                    icon: "error, vuelve a intentarlo mas tarde"
                 });
+
+
             }
             setIsSubmit(false);
         } catch (error) {
             setIsSubmit(false);
+            console.log(error)
             Swal.fire({
                 title: "error fuera de servicio",
                 text: "error en la app",

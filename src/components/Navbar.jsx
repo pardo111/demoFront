@@ -8,7 +8,7 @@ export default function Navbar() {
 
             <ul className="text-xl flex flex-col items-center gap-4 md:gap-2 md:items-start">
                 <li>
-                    <NavLink to="inicio" className={navLinkClass}>
+                    <NavLink to="/dashboard" className={navLinkClass}>
                         <i className="fa-solid fa-house text-sm mx-2"></i>
                         <p className="hidden md:inline">Inicio</p>
                     </NavLink>

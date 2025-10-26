@@ -6,8 +6,8 @@ export function RutasPrivadas(){
 
    const {user} = useUser();
 
-   if(!user?.token)
-      return <Navigate to='/Inicio_sesion'   replace/>
+   if(!user)
+      return <Navigate to='/'   replace/>
 
    return <Outlet/>;
 }
