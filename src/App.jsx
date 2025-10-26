@@ -12,9 +12,14 @@ import Cuenta from './views/privadas/Cuenta';
 import Agendar_citas from './views/privadas/Agendar_cita';
 import { LandinPage } from './views/publicas/LandinPage';
 import { RutasPrivadas } from './wrappers/RutasPrivadas';
+import { useState } from 'react';
 
 function App() {
 
+const [user, setUser] = useState({
+  username:localStorage.getItem("username"),
+  token:localStorage.getItem("token")
+});
 
   return (
     <>
@@ -23,7 +28,7 @@ function App() {
           <Route path='/' element={<LandinPage />}></Route>
           <Route path="/Inicio_sesion" element={<Inicio_sesion />}></Route>
           <Route path="/reset_contra" element={<Reset_contra />}></Route>
-          <Route element={<RutasPrivadas   />}>
+          <Route element={<RutasPrivadas />}>
             <Route path="/Dashboard" element={<Dashboard />}>
               <Route path="" element={<Inicio />} />
               <Route path="administrar_usuarios" element={<Administrar_usuarios />} />
@@ -33,7 +38,6 @@ function App() {
               <Route path="reportes" element={<Reportes />} />
             </Route>
           </Route>
-
         </Routes>
       </BrowserRouter>
 

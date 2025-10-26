@@ -6,15 +6,21 @@ import Swal from "sweetalert2";
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 import api from "@/services/api";
+import {  useUser } from "../../context/UserContext";
 
 export default function Inicio_sesion() {
-
+    const {user} = useUser();
     const navigate = useNavigate();
+    const [isSubmit, setIsSubmit] = useState(false);
     const [data, setData] = useState({
         username: "",
         password: ""
     });
-    const [isSubmit, setIsSubmit] = useState(false);
+
+
+
+
+
     function handleOnChange(e) {
         setData({
             ...data,
@@ -22,19 +28,21 @@ export default function Inicio_sesion() {
         });
     }
 
+
+
     async function sendData(e) {
         e.preventDefault();
         setIsSubmit(true);
-
+        console.log(user)
         try {
 
-            console.log(data);
             const response = await api.post("/auth/login", data);
-            console.log(response.status);
-            console.log(response);
-            if (response.status===200) {
+            if (response.status === 200) {
                 navigate('/Dashboard');
-
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("username", response.data.username);
+                setUser({username:response.data.username});
+                setUser
                 Toastify({
                     text: "Has iniciado sesion",
                     duration: 3000,
@@ -48,7 +56,7 @@ export default function Inicio_sesion() {
                         fontWeight: "bold"
                     }
                 }).showToast();
-            } else if (response.status===203) {
+            } else if (response.status === 203) {
 
                 Swal.fire({
                     title: "credenciales incorrectas",
@@ -65,11 +73,11 @@ export default function Inicio_sesion() {
             setIsSubmit(false);
         } catch (error) {
             setIsSubmit(false);
-                Swal.fire({
-                    title: "error fuera de servicio",
-                    text: "error en la app",
-                    icon: "error, vuelve a intentarlo mas tarde"
-                });
+            Swal.fire({
+                title: "error fuera de servicio",
+                text: "error en la app",
+                icon: "error, vuelve a intentarlo mas tarde"
+            });
         }
 
 
@@ -79,7 +87,6 @@ export default function Inicio_sesion() {
     }
 
     return (
-
         <section className="bg-[#273240] relative h-screen w-screen flex flex-col items-center justify-center p-0 m-0 overflow-hidden">
             <div className="absolute bg-[#404852] min-h-[700px] min-w-[1000px] rounded-[160px] rotate-45 z-0 -top-70 -left-80"></div>
             <div className="absolute bg-[#404852] min-h-[700px] min-w-[1000px] rounded-[160px] rotate-45 z-0 -bottom-60 -right-70"></div>

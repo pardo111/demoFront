@@ -1,11 +1,13 @@
 import {  Navigate, Outlet } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 
-export function RutasPrivadas({user}){
+export function RutasPrivadas(){
 
+   const {user} = useUser();
 
-   if(!user)
-      return <Navigate to='/'   />
+   if(!user?.token)
+      return <Navigate to='/Inicio_sesion'   replace/>
 
    return <Outlet/>;
 }

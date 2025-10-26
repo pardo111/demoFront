@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
 
     const [user, setUser] = useState(false);
-    const userName = 'user name', userEmail = 'mail@mail.com';
     const navigate = useNavigate();
 
     return (
@@ -27,9 +26,6 @@ export default function Dashboard() {
                             <h1  >
                                 {userName}
                             </h1>
-                            <p className="text-lg opacity-50">
-                                {userEmail}
-                            </p>
                         </div>
 
                     </div>
